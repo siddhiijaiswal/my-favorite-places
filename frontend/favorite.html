@@ -308,20 +308,15 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     function updateMarkers() {
-    // 1. Clear existing Leaflet markers
     markers.forEach(marker => map.removeLayer(marker));
     markers = [];
 
     filteredPlaces.forEach(place => {
         const customIcon = createCustomIcon(place.category);
-        
-        // 2. Create the Leaflet marker and add it to the map
         const marker = L.marker([place.lat, place.lng], {
             icon: customIcon,
             title: place.name
         }).addTo(map);
-
-        // 3. Define the popup content
         const popupContent = `
             <div class="info-window">
                 <h3>${place.name}</h3>
@@ -334,15 +329,10 @@ document.addEventListener('DOMContentLoaded', () => {
                 </div>
             </div>
         `;
-        
-        // 4. Bind the popup content
         marker.bindPopup(popupContent); 
-
-        // 5. CRITICAL FIX: Add explicit click listener to ensure popup opens
         marker.on('click', function() {
             this.openPopup();
         });
-        
         markers.push(marker);
     });
 }
@@ -350,4 +340,5 @@ document.addEventListener('DOMContentLoaded', () => {
     window.markVisit = markVisit;
   </script>
 </body>
+
 </html>
